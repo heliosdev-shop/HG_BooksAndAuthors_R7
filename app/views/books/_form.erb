@@ -1,0 +1,31 @@
+<div class="row">
+  <div class='col-md-2' ><span class='<%= "alert-danger" if book.errors.details.keys.include?(:name) %>'  style="display: inherit;"  >  <%= f.text_field :name, value: @book.name, autocomplete: 'off', size: 40, class: 'form-control', type: '' %>
+   <label class='form-text' >Name</label>
+</span><br />
+<span class='<%= "alert-danger" if book.errors.details.keys.include?(:author) %>'  style="display: inherit;"  ><%= f.collection_select(:author_id, Author.all, :id, :name, {prompt: true, selected: @book.author_id }, class: 'form-control') %>
+  <label class='small form-text text-muted'>Author</label></span></div>
+<div class='col-md-2' ><span class='<%= "alert-danger" if book.errors.details.keys.include?(:blurb) %>'  style="display: inherit;"  >  <%= f.text_field :blurb, value: @book.blurb, autocomplete: 'off', size: 40, class: 'form-control', type: '' %>
+   <label class='form-text' >Blurb</label>
+</span><br />
+<span class='<%= "alert-danger" if book.errors.details.keys.include?(:long_description) %>'  style="display: inherit;"  ><%= f.text_area :long_description, class: 'form-control', autocomplete: 'off', cols: 40, rows: '5' %><label class='form-text'>Long description</label></span></div>
+<div class='col-md-2' ><span class='<%= "alert-danger" if book.errors.details.keys.include?(:cost) %>'  style="display: inherit;"  >  <%= f.text_field :cost, value: @book.cost, autocomplete: 'off', size: 5, class: 'form-control', type: '' %>
+   <label class='form-text' >Cost</label>
+</span><br />
+<span class='<%= "alert-danger" if book.errors.details.keys.include?(:how_many_printed) %>'  style="display: inherit;"  ><%= f.text_field :how_many_printed, value: book.how_many_printed, class: 'form-control', size: 4, type: 'number' %>
+  <label class='small form-text text-muted'>How many printed</label></span></div>
+<div class='col-md-2' ><span class='<%= "alert-danger" if book.errors.details.keys.include?(:approved_at) %>'  style="display: inherit;"  ><%= datetime_field_localized(f, :approved_at, book.approved_at, 'Approved at', nil) %></span><br />
+<span class='<%= "alert-danger" if book.errors.details.keys.include?(:release_on) %>'  style="display: inherit;"  ><%= date_field_localized(f, :release_on, book.release_on, 'Release on', nil) %></span></div>
+<div class='col-md-2' ><span class='<%= "alert-danger" if book.errors.details.keys.include?(:time_of_day) %>'  style="display: inherit;"  ><%= time_field_localized(f, :time_of_day, book.time_of_day,  'Time of day', nil) %></span><br />
+<span class='<%= "alert-danger" if book.errors.details.keys.include?(:selected) %>'  style="display: inherit;"  >   <span>Selected</span>  <%= f.radio_button(:selected,  '0', checked: book.selected  ? '' : 'checked') %>
+  <%= f.label(:selected, value: 'No', for: 'book_selected_0') %>
+  <%= f.radio_button(:selected, '1',  checked: book.selected  ? 'checked' : '') %>
+  <%= f.label(:selected, value: 'Yes', for: 'book_selected_1') %>
+</span><br />
+<span class='<%= "alert-danger" if book.errors.details.keys.include?(:genre) %>'  style="display: inherit;"  ><%= f.collection_select(:genre,  enum_to_collection_select( Book.defined_enums['genres']), :key, :value, {prompt: true, selected: @book.genre }, class: 'form-control') %>
+  <label class='small form-text text-muted'>Genre</label></span></div>
+
+  <div class="col-md-2">
+    <%= link_to "Cancel", books_path,  {class: "btn btn-secondary"} %>
+    <%= f.submit "Save", class: "btn btn-primary pull-right" %>
+  </div>
+</div>

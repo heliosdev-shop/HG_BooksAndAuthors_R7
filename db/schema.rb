@@ -10,9 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_12_29_120709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "genres", ["fiction", "nonfiction", "biography", "science_fiction", "mystery"]
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "name"
+    t.integer "author_id"
+    t.string "blurb"
+    t.text "long_description"
+    t.float "cost"
+    t.integer "how_many_printed"
+    t.datetime "approved_at", precision: 6
+    t.date "release_on"
+    t.time "time_of_day"
+    t.boolean "selected"
+    t.enum "genre", enum_type: "genres"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
 end

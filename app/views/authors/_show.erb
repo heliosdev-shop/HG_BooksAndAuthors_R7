@@ -1,0 +1,18 @@
+<div class='col-md-2'><%= author.name %></div>
+
+
+
+
+<div class=" scaffold-line-buttons  col-md-2" >
+  
+
+  
+    <%= form_with url: author_path(author), html: {style: "display: inline-block;"}, method: :delete do |f| %>
+      <%= f.submit "Delete".html_safe,  data: {controller: 'confirmable', 'confirm-message': "Are you sure you want to delete #{ author.name } ", 'action': 'confirmation#confirm'}, class: "delete-author-button btn btn-primary btn-sm" %>
+    <% end %>
+  
+
+  
+  <%= link_to "Edit <i class='fa fa-1x fa-list-alt'></i>".html_safe, edit_author_path(author), disable_with: "Loading...", class: "edit-author-button btn btn-primary btn-sm" %>
+  
+</div>

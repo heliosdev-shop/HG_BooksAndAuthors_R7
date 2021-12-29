@@ -1,0 +1,50 @@
+<div class='col-md-2'><%= book.name %><br /><%= book.author.try(:name) || '<span class="content alert-danger">MISSING</span>'.html_safe %></div>
+<div class='col-md-2'><%= book.blurb %><br /><%= book.long_description %></div>
+<div class='col-md-2'><%= book.cost%><br /><%= book.how_many_printed%></div>
+<div class='col-md-2'><% unless book.approved_at.nil? %>
+  <%= book.approved_at.in_time_zone(current_timezone).strftime('%m/%d/%Y @ %l:%M %p ') + timezonize(current_timezone) %>
+  <% else %>
+  <span class='alert-danger'>MISSING</span>
+  <% end %><br /><% unless book.release_on.nil? %>
+      <%= book.release_on %>
+    <% else %>
+    <span class='alert-danger'>MISSING</span>
+    <% end %></div>
+<div class='col-md-2'><% unless book.time_of_day.nil? %>
+      <%= book.time_of_day.in_time_zone(current_timezone).strftime('%l:%M %p ') + timezonize(current_timezone) %>
+     <% else %>
+    <span class='alert-danger'>MISSING</span>
+    <% end %><br />
+    <% if book.selected.nil? %>
+        <span class='alert-danger'>MISSING</span>
+    <% elsif book.selected %>
+      YES
+    <% else %>
+      NO
+    <% end %>
+
+  <br />
+    <% if book.genre.nil? %>
+        <span class='alert-danger'>MISSING</span>
+    <% else %>
+      <%=  Book.defined_enums['genres'][book.genre] %>
+    <% end %>
+
+  </div>
+
+
+
+
+<div class=" scaffold-line-buttons  col-md-2" >
+  
+
+  
+    <%= form_with url: book_path(book), html: {style: "display: inline-block;"}, method: :delete do |f| %>
+      <%= f.submit "Delete".html_safe,  data: {controller: 'confirmable', 'confirm-message': "Are you sure you want to delete #{ book.name } ", 'action': 'confirmation#confirm'}, class: "delete-book-button btn btn-primary btn-sm" %>
+    <% end %>
+  
+
+  
+  <%= link_to "Edit <i class='fa fa-1x fa-list-alt'></i>".html_safe, edit_book_path(book), disable_with: "Loading...", class: "edit-book-button btn btn-primary btn-sm" %>
+  
+</div>
